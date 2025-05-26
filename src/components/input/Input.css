@@ -1,0 +1,67 @@
+
+.inputform{
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 4px;
+    height: fit-content;
+}
+
+
+.inputform input {
+    width: 100%;
+    height: 2.4rem;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px; 
+    border-color: #ccc; 
+    padding-left: 8px;
+    box-shadow: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    outline: none; 
+    padding-top: 8px; 
+    z-index: 0; 
+    display: flex;
+    margin-bottom: 20px;
+}
+
+
+.input__label{
+    font-size: 14px;
+}
+
+.inputform input::placeholder{
+      font-family: 'Courier New', Courier, monospace;
+    opacity: 1;
+    height: fit-content;
+        color: #999; 
+
+}
+
+.inputform select{
+      width: 100%;
+    height: 2.4rem;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px; 
+    border-color: #ccc; 
+    padding-left: 8px;
+    box-shadow: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    outline: none; 
+    padding-top: 8px; 
+    z-index: 0; 
+    display: flex;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+
+.inputform{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+

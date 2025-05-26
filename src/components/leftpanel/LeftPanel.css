@@ -1,0 +1,27 @@
+.leftpanel__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid black; */
+    background-color: #d8f5ff;
+}
+
+.circular__mask{
+    border-radius: 50%;
+    width: 60%;
+    height: 60%;
+    /* border: 1px solid red; */
+        background-color: #d8f5ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circular__mask img{
+    height: 100%;
+    width: auto;
+    border-radius: 50%;
+    overflow: hidden;
+}
