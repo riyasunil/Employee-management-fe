@@ -1,0 +1,9 @@
+.status_wrapper{
+    border-radius: 16px;
+    width: fit-content;
+    padding: 4px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

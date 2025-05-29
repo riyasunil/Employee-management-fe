@@ -1,4 +1,3 @@
-import React from 'react'
 import LeftPanelImg from "../../assets/kv-login.jpeg"
 import "./LeftPanel.css"
 const LeftPanel = () => {

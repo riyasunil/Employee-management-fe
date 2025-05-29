@@ -37,6 +37,8 @@
     position: relative; 
     /* margin-bottom: 20px;  */
     /* border: 1px solid hotpink; */
+    display: flex;
+    align-items: center;
 
 }
 
@@ -59,5 +61,12 @@
 }
 .input_wrapper input::placeholder {
     color: transparent;
+}
+
+.input__right__icon{
+    position: absolute;;
+    right: 10px;
+    top: 15%;
+    height: fit-content;
 }
 

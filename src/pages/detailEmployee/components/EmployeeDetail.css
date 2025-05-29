@@ -1,0 +1,50 @@
+.employeedetails__container {
+    width: 95%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    height: fit-content;
+    /* border: 1px solid black; */
+
+
+}
+
+.employeedetails__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 16px;
+}
+
+.employee_content_details {
+    /* background-color: #fff; */
+    padding: 15px 20px;
+    border-radius: 8px;
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    /* border: 1px solid black; */
+}
+
+.employee_content_details p:last-child {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.employee_content_details p:first-child {
+    color: #555;
+    margin: 0;
+}
+
+.divider {
+  grid-column: span 6;
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}

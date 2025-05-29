@@ -1,0 +1,97 @@
+.form__container {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fdfdfd;
+  border-radius: 16px;
+  justify-content: center;
+  box-shadow: 0 3px 6px 0px #9d9d9d29;
+  /* border: 1px solid rebeccapurple; */
+  height: fit-content;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2rem;
+  row-gap: 2rem;
+  /* margin: 4rem; */
+  padding: 4rem 2rem;
+  padding-bottom: 1rem;
+  background-color: white;
+  flex-grow: 1;
+  border-radius: 16px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.inputform {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 3px;
+  height: fit-content;
+}
+
+.inputform input {
+  width: 100%;
+  height: 2.4rem;
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  padding-left: 8px;
+  box-shadow: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  outline: none;
+  padding-top: 8px;
+  z-index: 0;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.input__label {
+  font-size: 14px;
+}
+
+.inputform input::placeholder {
+  font-family: "Courier New", Courier, monospace;
+  opacity: 1;
+  height: fit-content;
+  color: #999;
+}
+
+.inputform select {
+  width: 100%;
+  height: 2.4rem;
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  padding-left: 8px;
+  box-shadow: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  outline: none;
+  padding-top: 8px;
+  z-index: 0;
+  display: flex;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.inputform {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__buttons {
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid black; */
+  width: 33.33%;
+  padding-left: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  gap: 1rem;
+}

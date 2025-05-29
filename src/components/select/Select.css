@@ -1,0 +1,9 @@
+.input__label{
+    margin-right: 10px;
+}
+
+select{
+    /* border-right: 10px solid transparent; */
+    height: fit-content;
+    
+}

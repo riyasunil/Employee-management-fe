@@ -1,18 +1,49 @@
-import React, { type ReactNode } from 'react'
-import Sidebar from '../../components/sidebar/Sidebar'
-import "./Layout.css"
-import Header from '../header/Header'
+import { useEffect, type ReactNode } from "react";
+import Sidebar from "../../components/sidebar/Sidebar";
+import "./Layout.css";
+import Header from "../header/Header";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const Layout = ({children} : {children :ReactNode }) => {
+const Layout = () => {
+  const isLoggedIn = () => {
+    const token = localStorage.getItem("isLoggedIn");
+    return token === "true";
+  };
+
+  if (!isLoggedIn()) {
+    console.log("dhfdjr");
+    return <Navigate to="/login" />;
+  }
+
+  const location = useLocation();
+  console.log(location.pathname);
+
+  const routeTitles: { [key: string]: string } = {
+    "/employee/create": "Create Employee",
+    "/employee/create/": "Create Employee",
+    "/employee": "List Employees",
+    "/employee/": "List Employees",
+  };
+
+  let currentTitle = routeTitles[location.pathname] || "Default";
+
+  if (location.pathname.startsWith("/employee/edit")) {
+    currentTitle = "Edit Employee";
+  } else if (routeTitles[location.pathname]) {
+    currentTitle = routeTitles[location.pathname];
+  }
+
   return (
-    <div className='Layout_container'>
-        <Sidebar />
-        <div className="main__container">
-            <Header />
-            {children}
+    <div className="Layout_container">
+      <Sidebar title={currentTitle} />
+      <div className="main__container">
+        <Header />
+        <div className="outlet__wrapper">
+          <Outlet />
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

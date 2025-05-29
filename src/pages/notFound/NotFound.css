@@ -1,0 +1,56 @@
+/* NotFound.css */
+
+.not-found-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: #f4f8fb;
+  /* padding: 0 20px; */
+  /* box-sizing: border-box; */
+  text-align: center;
+}
+
+.not-found-content {
+  max-width: 500px;
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+}
+
+.not-found-icon {
+  margin-bottom: 24px;
+  height: fit-content;
+}
+
+.not-found-content h1 {
+  font-size: 28px;
+  color: #333333;
+  margin-bottom: 12px;
+}
+
+.not-found-content p {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 24px;
+}
+
+.return-home-btn {
+  display: inline-block;
+}
+  /* padding: 12px 24px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #03aeee;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.return-home-btn:hover {
+  background-color: #028cc0;
+} */

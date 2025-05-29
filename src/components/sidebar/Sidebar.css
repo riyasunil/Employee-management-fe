@@ -17,7 +17,8 @@
     width: inherit;
     /* background-color: rgb(235, 233, 233); */
     /* padding: 0.5rem 0; */
-    height: 8%;
+    height: 8vh;
+    background-color: #E2E8FA;
 
 }
 
@@ -31,4 +32,5 @@
     flex-direction: column;
     width: 100%;
     align-items: flex-end;
+    margin-top: 23px;
 }

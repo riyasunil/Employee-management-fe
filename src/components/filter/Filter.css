@@ -1,0 +1,7 @@
+.filter__wrapper{
+    /* border: 1px solid darkblue; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+}
