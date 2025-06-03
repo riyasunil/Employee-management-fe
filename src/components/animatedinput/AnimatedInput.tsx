@@ -14,7 +14,7 @@ type InputProps = {
 const AnimatedInput = ({inputType, placeholder, id, value, onChange, inputRef, endAdornment} : InputProps) => {
   return (
     <div className="input_wrapper">
-        <input type={inputType}  id={id} placeholder={placeholder} value={value} onChange={onChange} ref={inputRef} /> 
+        <input type={inputType}  id={id} placeholder={placeholder} value={value} onChange={onChange} ref={inputRef}/> 
         {/* whithout the onChange prop here the event is not binded to the input => meaning whatever is typed in the input will not inputReflect in the state in the parent components usestate. */}
         <label htmlFor={id}>{placeholder}</label>
          {endAdornment && (<div className="input__right__icon">{endAdornment}</div>)}

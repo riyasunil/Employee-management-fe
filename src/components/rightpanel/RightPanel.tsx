@@ -2,62 +2,100 @@ import Button from "../button/Button";
 import "./RightPanel.css";
 import KVlogo from "../../assets/kv-logo.png";
 import AnimatedInput from "../animatedinput/AnimatedInput";
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
-import { Navigate, useNavigate, useNavigation, useRoutes } from "react-router-dom";
+import React, { useEffect, useRef, useState, type ChangeEvent } from "react";
+import {
+  Navigate,
+  useNavigate,
+  useNavigation,
+  useRoutes,
+} from "react-router-dom";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useLoginMutation } from "../../api-services/auth/login.api";
 
 const RightPanel = () => {
-
   const router = useNavigate();
   // const [formData, setFormData] = useState({ email: "", password: "" });
+  const [login, { isLoading }] = useLoginMutation();
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordLengthError, setPasswordLengthError] = useState("");
-  const [usernameLengthError, setUsernameLengthError] = useState("");
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const validCredentials = {
-    email: "ria@gmail.com",
-    password : "hihihihi"
-  }
-  const handleSubmit = (e : React.MouseEvent<HTMLButtonElement>) => {
+  const [emailValidationError, setEmailValidationError] = useState("");
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useLocalStorage(
+    "showPassword",
+    false
+  );
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  console.log(isLoading);
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(email, password);
-    if(email === validCredentials.email && password === validCredentials.password) { console.log("logging in"); localStorage.setItem("isLoggedIn", "true"); router("/employee")} 
-    else {console.log("invalid user creds"); localStorage.setItem("isLoggedIn", "false");}
+    login({ email: email, password: password })
+      .unwrap()
+      .then((response) => {
+        localStorage.setItem("token", response.accessToken);
+        router("/employee");
+      })
+      .catch((error) => {
+        setError(error.data.message);
+      });
+
+    // if (response.data?.accessToken) {
+    //   localStorage.setItem("token", response.data?.accessToken);
+    //   setTimeout(() => {
+    //     router("/employee");
+    //   }, 6000);
+    // }
   };
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
-  };
+  // const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setUsername(event.target.value);
+  // };
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
+  const toggleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // if(passwordRef.current){
+    //   const currType = passwordRef.current.type;
+    //   passwordRef.current.type = currType === "password" ?  "text" : "password"
+    // }
+    setShowPassword(e.target.checked);
+  };
 
   useEffect(() => {
-    if (password.length > 0 && password.length < 8) {
+    if (password.length > 0 && password.length < 6) {
       console.log(password.length);
-      setPasswordLengthError("The password should be atleast 8 characters");
+      setPasswordLengthError("The password should be atleast 6 characters");
     } else {
       setPasswordLengthError("");
     }
   }, [password]);
 
-  useEffect(() => {
-    if (username.length > 5) {
-      setUsernameLengthError("Username should be max 5 characters");
+ useEffect(() => {
+  const timeoutId = setTimeout(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValid = emailRegex.test(String(email).toLowerCase());
+    console.log(isValid)
+    if (!isValid && email) {
+      setEmailValidationError("Please enter a valid email");
     } else {
-      setUsernameLengthError("");
+      setEmailValidationError("");
     }
-  }, [username]);
+  }, 300); 
+  return () => clearTimeout(timeoutId); 
+}, [email]);
 
   useEffect(() => {
-    if(usernameRef.current) usernameRef.current.focus();
+    if (emailRef.current) emailRef.current.focus();
   }, []);
 
   return (
@@ -70,16 +108,17 @@ const RightPanel = () => {
           placeholder="Email"
           value={email}
           onChange={handleEmailChange}
+          inputRef={emailRef}
         ></AnimatedInput>
-        <AnimatedInput
+        {/* <AnimatedInput
           inputType="text"
           id="username"
           placeholder="Username"
           value={username}
           onChange={handleUsernameChange}
-          inputRef = {usernameRef} 
-        ></AnimatedInput>
-        {usernameLengthError && (
+          inputRef={usernameRef}
+        ></AnimatedInput> */}
+        {emailValidationError && (
           <p
             style={{
               color: "red",
@@ -88,33 +127,48 @@ const RightPanel = () => {
               fontFamily: "'Courier New', Courier, monospace",
             }}
           >
-            {usernameLengthError}
+            {emailValidationError}
           </p>
         )}
         <AnimatedInput
-          inputType="password"
+          inputType={showPassword ? "text" : "password"}
           id="password"
           placeholder="Password"
           value={password}
           onChange={handlePasswordChange}
+          inputRef={passwordRef}
           endAdornment={
-            <button style={{
-              display: 'flex',
-              padding : '2px',
-              backgroundColor : 'white',
-              boxShadow : 'none',
-              border :  '1px solid gray',
-              borderRadius : '50%',
-              width: '22px',
-              height: '22px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer'
-            }} type="button"  onClick={()=> {setPassword("")}} >
+            <button
+              style={{
+                display: "flex",
+                padding: "2px",
+                backgroundColor: "white",
+                boxShadow: "none",
+                border: "1px solid gray",
+                borderRadius: "50%",
+                width: "22px",
+                height: "22px",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
+              type="button"
+              onClick={() => {
+                setPassword("");
+              }}
+            >
               X
             </button>
           }
         ></AnimatedInput>
+        <div className="show_password">
+          <input
+            type="checkbox"
+            checked={showPassword}
+            onChange={toggleShowPassword}
+          />
+          Show password
+        </div>
         {passwordLengthError && (
           <p
             style={{
@@ -134,10 +188,23 @@ const RightPanel = () => {
             color: "white",
             backgroundColor: "#03AEEE",
           }}
+          disabled={isLoading}
           onClick={handleSubmit}
         >
-          Login
+          {`Login ${isLoading}`}
         </Button>
+        {error && (
+          <p
+            style={{
+              fontFamily: "'Courier New', Courier, monospace",
+              color: "red",
+              marginTop: "8px",
+              fontSize: "12px",
+            }}
+          >
+            {error}
+          </p>
+        )}
       </div>
     </div>
   );

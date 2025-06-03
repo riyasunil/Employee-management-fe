@@ -36,10 +36,11 @@
 }
 
 .tab__icon{
-    /* background-color: white; */
-    /* border-radius: 50%; */
+    background-color: white;
+    border-radius: 50%;
     height: 25px;
     width: 25px;
-    /* padding: 3px; */
-    /* scale: 20%; */
+    padding: 3px;
+    scale: 250%;
+    fill: white;
 }

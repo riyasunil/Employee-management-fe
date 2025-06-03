@@ -1,24 +1,33 @@
-.rightpanel__container{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+.rightpanel__container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.rightpanel__container img{
-    width: 220px;
-    padding-bottom: 18px;
+.rightpanel__container img {
+  width: 220px;
+  padding-bottom: 18px;
 }
 
-.login_input{
-     width: 50%;
-     height: auto;
-     display: flex;
-     flex-direction: column;
-     /* gap: 4px; */
-         /* border: 4px solid purple; */
+.login_input {
+  width: 50%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  /* gap: 4px; */
+}
 
+.show_password {
+  display: flex;
+  align-items: center;
+  /* border: 4px solid purple; */
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 14px;
+}
+
+.show_password input {
+    margin-right: 4px;
 }

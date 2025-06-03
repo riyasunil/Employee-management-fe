@@ -1,12 +1,17 @@
+import { lazy } from 'react';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import Login from './pages/login/Login'
-import NotFound from './pages/notFound/NotFound';
 import Layout from './components/layout/Layout';
-import ListEmployees from './pages/listEmployees/ListEmployees';
-import Test from './pages/Test';
-import EmployeeDetailPage from './pages/detailEmployee/EmployeeDetailPage';
 import PublicLayout from './components/publiclayout/PublicLayout';
-import ManageEmployee from './pages/manageEmployee/manageEmployee';
+import { Provider } from 'react-redux';
+import store from './store/store';
+
+
+const NotFound = lazy(() => import('./pages/notFound/NotFound')) 
+const ListEmployees = lazy(() => import('./pages/listEmployees/ListEmployees')) 
+const EmployeeDetailPage = lazy(() => import('./pages/detailEmployee/EmployeeDetailPage')) 
+const ManageEmployee = lazy(() => import('./pages/manageEmployee/manageEmployee')) 
+
 
 
 function App() {
@@ -20,10 +25,6 @@ function App() {
           element : <PublicLayout children={<Login />} />
         },
         {
-          path : '/test',
-          element : <Test />
-        },
-        {
           path: '/employee',
           element : <Layout />,
           children: [
@@ -35,7 +36,9 @@ function App() {
         }
       ]);
   return (
+    <Provider store={store}>
      <RouterProvider router={router} />
+     </Provider>
   )
 }
 

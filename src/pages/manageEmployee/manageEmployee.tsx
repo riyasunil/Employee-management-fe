@@ -1,46 +1,108 @@
-// import "../createEmployee/Employee.css";
 import EmployeeDetailsForm from "../../components/employeedetailsform/EmployeeDetailsForm";
 import Title from "../../components/title/Title";
 import { Button } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { employeeList } from "../../constants/EmployeeList";
+import {
+  EmployeeRole,
+  EmployeeStatus,
+  type Address,
+  type Employee,
+  type Role,
+  type Status,
+} from "../../store/employee/employee.types";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { addEmployee } from "../../store/employee/employeeReducer";
+import {
+  useCreateEmployeeMutation,
+  useGetEmployeeListQuery,
+  useUpdateEmployeeMutation,
+} from "../../api-services/employees/employees.api";
+import toast, { Toaster } from "react-hot-toast";
+// import "./manageEmployee.css"
 
 const ManageEmployee = () => {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<Employee>({
     id: 0,
     email: "",
-    employeeName: "",
-    joiningDate: "",
-    experience: "",
-    department: "",
-    role: "",
-    status: "",
-    address: "",
-    empId: "",
+    name: "",
+    dateOfJoining: "",
+    experience: 0,
+    departmentId: "",
+    role: EmployeeRole.DEV,
+    status: EmployeeStatus.PROBATION,
+    address: {
+      houseNo: "",
+      line1: "",
+      line2: "",
+      pincode: "",
+    },
+    employeeId: "",
+    age: 0,
+    password: "",
   });
+
+  const [createEmployee] = useCreateEmployeeMutation();
+  const [updateEmployee] = useUpdateEmployeeMutation();
   const { id } = useParams();
-  const employee = employeeList.find((emp) => emp.empId === id);
+
+  const { data: employees } = useGetEmployeeListQuery({});
+const employee = employees?.find((emp: Employee) => emp.id == Number(id));
+
+
+  // const employees = useAppSelector((state) => state.employee.employees);
+  // const employees = useAppSelector((state) => state.jdfhbjdr);
+
+  console.log("employess", employees);
+
+  function parseRole(role: string): Role {
+    return Object.values(EmployeeRole).includes(role as Role)
+      ? (role as Role)
+      : EmployeeRole.DEV;
+  }
+
+  function parseStatus(status: string): Status {
+    return Object.values(EmployeeStatus).includes(status as Status)
+      ? (status as Status)
+      : EmployeeStatus.INACTIVE;
+  }
+
   useEffect(() => {
+    console.log("here", id, employee);
     if (id && employee) {
       setValues({
-        id: employee.id,
-        employeeName: employee.name || "",
+        id: employee.id || 0,
+        name: employee.name || "",
         email: employee.email || "",
-        empId: employee.empId || "",
-        joiningDate: employee.joiningDate || "",
-        experience: employee.exp || "",
-        department: employee.department || "",
-        role: employee.role || "",
-        status: employee.status || "",
-        address: employee.address || "",
+        employeeId: employee.employeeId || "",
+        dateOfJoining: employee.dateOfJoining || "",
+        experience: Number(employee.experience) || 0,
+        departmentId: employee.department.id || "",
+        role: parseRole(employee.role) || EmployeeRole.DEV,
+        status: parseStatus(employee.status) || EmployeeStatus.INACTIVE,
+        address: employee.address || {
+          houseNo: "",
+          line1: "",
+          line2: "",
+          pincode: "",
+        },
+        age: employee.age || 0,
+        password: employee.password || "",
       });
     }
-  }, [id]);
+  }, [id, employee]);
+
+  useEffect(() => {
+    console.log("values has been set", values);
+  }, [values]);
+
   const navigator = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
   let basePath = location.pathname;
-
+  // const emp = useSelector((state : EmployeeState) => state.employees)
+  // console.log(emp)
   if (basePath.startsWith("/employee/edit")) basePath = "/employee/edit";
   if (basePath.startsWith("/employee/create")) basePath = "/employee/create";
 
@@ -75,32 +137,104 @@ const ManageEmployee = () => {
     cancelText: "Cancel",
   };
 
-  const updateField = (field: string, value: string) => {
+  const updateField = (field: keyof Employee, value: string | number) => {
     setValues((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
 
-  useEffect(() => {
-    if (!employee && currentRoute === "edit") {
-      navigator("/");
-    }
-  }, [employee, navigator]);
+  const handleAddressChange = (field: string, value: string) => {
+    setValues((prev) => ({
+      ...prev,
+      address: { ...prev.address, [field]: value },
+    }));
+  };
+
+  const handleEditEmployee = async () => {
+
+     const cleanAddress = {
+    houseNo: values.address.houseNo,
+    line1: values.address.line1,
+    line2: values.address.line2,
+    pincode: values.address.pincode,
+  };
+
+    // const roleEnum: EmployeeRole = EmployeeRole[values.role as keyof typeof EmployeeRole] || EmployeeRole.DEVELOPER;
+    
+    const updateBody = {
+      name: values.name,
+      email: values.email,
+      role: values.role,
+      address: cleanAddress,
+      status : values.status,
+      departmentId : values.departmentId,
+      password : values.password,
+      age : values.age,
+      dateOfJoining : values.dateOfJoining,
+      experience : values.experience,
+    };
+
+    console.log("id", id)
+    console.log("updatebody", updateBody)
+    updateEmployee({ id, updateBody })  
+    .unwrap()
+    .then((res) => {
+      console.log(res);
+      if (res) {
+        alert("employee updated");
+        toast.success('Employee Updated', {
+                  icon : '✅'
+                })
+        navigator("/employee");
+      }
+    })
+    .catch((error) => {  
+      console.error("Update failed:", error);
+      alert("Failed to update employee");
+    });
+  };
+
+  const handleCreateEmployee = async () => {
+    console.log(values);
+    const { id, ...createEmployeeBody } = values;
+    createEmployee(createEmployeeBody)
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        if (res) {
+          alert("employee created");
+          //  toast.success('Employee Created', {
+          //         icon : '✅'
+          //       })
+          navigator("/employee");
+        }
+      });
+  };
 
   return (
     <div className="employee_container">
+      <Toaster position="top-right"  toastOptions={{
+      success: {
+        className: `h-max-content bg-green-600`,
+      },
+    }}/>
       <Title title={title} />
       <EmployeeDetailsForm
+        createEmployee={handleCreateEmployee}
         update={updateField}
-        name={employee?.name}
-        email={employee?.email}
-        empId={employee?.empId}
-        joiningDate={employee?.joiningDate}
-        role={employee?.role}
-        status={employee?.status}
-        exp={employee?.exp}
-        address={employee?.address}
+        updateAddress={handleAddressChange}
+        name={values.name}
+        email={values.email}
+        empId={values.employeeId}
+        dateOfJoining={values.dateOfJoining}
+        role={values.role}
+        status={values.status}
+        exp={values.experience}
+        age={values.age}
+        departmentId={values.departmentId as string}
+        password={values.password}
+        address={values.address}
         empIDDisabledStyle={
           currentRoute === "create"
             ? { cursor: "text" }
@@ -116,8 +250,21 @@ const ManageEmployee = () => {
                 padding: "10px 5rem",
                 fontSize: "18",
               }}
-              onClick={() => {
-                console.log(values);
+              onClick={(e) => {
+                // write function to dispacth add action
+                // e.preventDefault();
+                // console.log(values);
+                // const res = dispatch(addEmployee(values));
+                // console.log(res);
+                // navigator("/employee");
+                if (basePath.startsWith("/employee/edit")) {
+                  console.log("inside edit");
+                  handleEditEmployee();
+                } else if (basePath.startsWith("/employee/create")) {
+                  //handle creation api
+                  console.log("hereeee");
+                  handleCreateEmployee();
+                }
               }}
             >
               {confirmText}

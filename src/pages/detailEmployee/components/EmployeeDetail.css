@@ -31,6 +31,9 @@
     /* border: 1px solid black; */
 }
 
+.employee_content_details:last-child{
+    grid-column: 1/3;
+}
 .employee_content_details p:last-child {
     font-weight: bold;
     color: #333;

@@ -1,12 +1,10 @@
-import React, { useMemo, useState } from 'react'
 import "./Filter.css"
-import Select from '../select/Select'
-import { useParams, useSearchParams } from 'react-router-dom'
+import FilterSelect from '../filterselect/FilterSelect'
 
 type ObjectType = {
     name: string,
     empId: string,
-    joiningDate: string,
+    dateOfJoining: string,
     role: string,
     status: string,
     exp: string
@@ -25,21 +23,21 @@ const Filter = ({name, id,filterFunction, statusFilter } :  FilterType) => {
 
 const statusOptions = [
   { name: "ALL", label: "All" },
-  { name: "Active", label: "Active" },
-  { name: "Probation", label: "Probation" },
-  { name: "Inactive", label: "Inactive" }
+  { name: "ACTIVE", label: "Active" },
+  { name: "PROBATION", label: "Probation" },
+  { name: "INACTIVE", label: "Inactive" }
 ];
 
   return (
     <div className='filter__wrapper'>
         <div className="filter__component">
-          <Select name={name} id={id} options={statusOptions} filterFunction = {filterFunction} statusFilter = {statusFilter} styles={{
+          <FilterSelect name={name} id={id} options={statusOptions} filterFunction = {filterFunction} statusFilter = {statusFilter} styles={{
             backgroundColor : '#EAF9FF',
             border : 'none',
             borderRadius : '50px',
             padding : '4px 10px',
             fontSize : '12px'
-          }}></Select>
+          }}></FilterSelect>
         </div>
     </div>
   )

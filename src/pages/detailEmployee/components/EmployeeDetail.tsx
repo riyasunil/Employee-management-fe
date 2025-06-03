@@ -5,32 +5,35 @@ import Status from "../../../components/status/Status";
 
 
 const statusColors: { [key: string]: string } = {
-  Active: "#C8E6C9",       // light green
-  Probation: "#FFF9C4",    // light yellow
-  Inactive: "#FFCDD2",     // light red
+  ACTIVE: "#C8E6C9",       // light green
+  PROBATION: "#FFF9C4",    // light yellow
+  INACTIVE: "#FFCDD2",     // light red
 };
 
 type EmployeeType = {
     name: string,
     empId: string,
-    joiningDate: string,
+    dateOfJoining: string,
     role: string,
     status: string,
-    exp: string
-    address : string
+    exp: number
+    address : string,
+    departmentName ?: string
 }
 
 
 const EmployeeDetail = ({
   name,
-  joiningDate,
+  dateOfJoining,
   exp,
   role,
   status,
   address,
   empId,
+  departmentName
 } : EmployeeType) => {
   // const { id } = useParams();
+  // console.log(departmentId)
   return (
     <div className="employeedetails__container">
         <div className="employee_content_details">
@@ -39,11 +42,15 @@ const EmployeeDetail = ({
         </div>
         <div className="employee_content_details">
           <p>Joining Date</p>
-          <p>{joiningDate}</p>
+          <p>{dateOfJoining}</p>
         </div>
         <div className="employee_content_details">
           <p>Experience</p>
           <p>{exp}</p>
+        </div>
+        <div className="employee_content_details">
+          <p>Department</p>
+          <p>{departmentName}</p>
         </div>
         <div className="employee_content_details">
           <p>Role</p>

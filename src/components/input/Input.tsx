@@ -8,15 +8,17 @@ type InputType = {
   disabled ?: boolean;
   placeholder ?: string;
   styles ?: CSSProperties
+  value ?: string | number,
     onChange : (event : ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input = ({ name, id, type, disabled , placeholder, styles, onChange}: InputType) => {
-  console.log(disabled)
+const Input = ({ name, id, type, disabled , placeholder, styles, onChange ,value}: InputType) => {
+  // console.log("value", name, value, "placeholder", placeholder)
+  // console.log(value?.toString())
   return (
     <div className="inputform">
       <label className="input__label">{name}</label>
-      <input type={type} placeholder={placeholder} id={id}  disabled={disabled} style={styles} defaultValue={placeholder} onChange={onChange}/>
+      <input type={type} placeholder={placeholder} id={id}  disabled={disabled} style={styles} value={value?.toString()} onChange={onChange}/>
     </div>
   );
 };

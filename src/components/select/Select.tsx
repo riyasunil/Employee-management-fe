@@ -1,42 +1,48 @@
-import { useMemo, useState, type CSSProperties } from "react";
-import { useSearchParams } from "react-router-dom";
-import "./Select.css"
+import { type CSSProperties } from "react";
+
+import "./Select.css";
 type ObjectType = {
-    name: string,
-    label : string
-}
-
-type EmployeeType = {
-    name: string,
-    empId: string,
-    joiningDate: string,
-    role: string,
-    status: string,
-    exp: string
-}
-
+  name: string | number;
+  label: string;
+};
 
 type SelectType = {
-  name: string;
+  name: string | number;
   id: string;
   options: Array<ObjectType>;
   // employees ?: Array<EmployeeType>;
-  filterFunction ?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  statusFilter ?: string
-  styles ?: CSSProperties
+  styles?: CSSProperties;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const Select = ({ name, id, options , filterFunction, statusFilter = "ALL", styles}: SelectType) => {
+const Select = ({
+  name,
+  id,
+  options,
+  styles = {},
+  value,
+  onChange,
+}: SelectType) => {
   return (
     <>
-    <label className="input__label" >{name}</label>
-    <select id={id} value={statusFilter} onChange={filterFunction} style={styles}>
-    {options.length>0 && (options.map((op: ObjectType, index:number) => {
-       return <option  key={index} value = {op.name} >{op.label}</option>
-    })
-)}
-</select>
-</>
-)};
+      <label className="input__label" htmlFor={id}>
+        {name}
+      </label>
+      <select id={id} style={styles} value={value} onChange={onChange}>
+        <option value="" disabled hidden>
+          Select Role
+        </option>
+        {options.map((op: ObjectType, index: number) => {
+          return (
+            <option key={index} value={op.name}>
+              {op.label}
+            </option>
+          );
+        })}
+      </select>
+    </>
+  );
+};
 
 export default Select;

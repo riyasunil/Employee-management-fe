@@ -7,58 +7,34 @@ import TableTitle from "./components/tableTitle/TableTitle";
 import Filter from "../../components/filter/Filter";
 import TitleButton from "../../components/titleButton/TitleButton";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { Employee, EmployeeState } from "../../store/employee/employee.types";
+import { useAppSelector } from "../../store/store";
+import { useGetEmployeeListQuery } from "../../api-services/employees/employees.api";
 
 const ListEmployees = () => {
   // const [searchParams, setSearchParams] = useParams();
-  const employeeList = [
-    {
-      name: "Alice Johnson",
-      empId: "EMP001",
-      joiningDate: "2022-03-15",
-      role: "Frontend Developer",
-      status: "Active",
-      exp: "3 years",
-      email: "difdr@gmail.com",
-    },
-    {
-      name: "Michael Smith",
-      empId: "EMP002",
-      joiningDate: "2021-11-20",
-      role: "Backend Engineer",
-      status: "Probation",
-      exp: "1 year",
-    },
-    {
-      name: "Priya Kumar",
-      empId: "EMP003",
-      joiningDate: "2019-07-05",
-      role: "Project Manager",
-      status: "Active",
-      exp: "5 years",
-    },
-    {
-      name: "David Lee",
-      empId: "EMP004",
-      joiningDate: "2023-01-10",
-      role: "UI/UX Designer",
-      status: "Active",
-      exp: "2 years",
-    },
-  ];
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [isDropDownOpen, setDropDownOpen] = useState(false);
 
   const navigator = useNavigate();
 
+    const {data} = useGetEmployeeListQuery({});
+    const globalEmp = data;
   const statusFilter = searchParams.get("status") || "ALL";
 
+  // const globalEmp = useAppSelector((state) => state.employee.employees)
+  // console.log(globalEmp)
+
   const filteredEmployees = useMemo(() => {
+     if (!globalEmp) return [];
     if (statusFilter === "ALL") {
-      return employeeList;
+      console.log("filtered", globalEmp)
+      return globalEmp;
     }
-    return employeeList?.filter((employee) => employee.status === statusFilter);
-  }, [employeeList, statusFilter]);
+    return globalEmp?.filter((employee: Employee) => employee.status === statusFilter);
+  }, [globalEmp, statusFilter]);
 
   const handleStatusFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -102,21 +78,24 @@ const ListEmployees = () => {
         }
       />
       <TableTitle />
-      {filteredEmployees &&
-        filteredEmployees.map((emp, index) => (
+      {filteredEmployees && filteredEmployees.length>0 ?
+        filteredEmployees.map((emp: Employee, index: React.Key | null | undefined) => (
           <TableRow
+            id = {emp.id}
             key={index}
             name={emp.name}
-            empId={emp.empId}
-            joiningDate={emp.joiningDate}
+            empId={emp.employeeId}
+            joiningDate={new Date(emp.dateOfJoining).toLocaleDateString()}
             role={emp.role}
             status={emp.status}
-            exp={emp.exp}
+            exp={emp.experience}
             onClick={() => {
-              navigator(`/employee/${emp.empId}`);
+              navigator(`/employee/${emp.employeeId}`);
             }}
           />
-        ))}
+        )): (
+          <p>No Records To Display</p>
+        )}
     </div>
   );
 };
