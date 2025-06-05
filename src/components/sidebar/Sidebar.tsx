@@ -18,7 +18,7 @@ const Sidebar = ({title} : {title : string}) => {
         <img src={KVlogo} alt="" className="sidebar__logo" />
         <div className="tabs">
             <Tab title={title} icon={SidebarIcon}/>
-            <Tab title="Logout" onClick={logout} />
+            <Tab title="Logout" onClick={logout} icon="/logout.svg" />
         </div>
     </div>
   )

@@ -80,19 +80,19 @@ const RightPanel = () => {
     }
   }, [password]);
 
- useEffect(() => {
-  const timeoutId = setTimeout(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValid = emailRegex.test(String(email).toLowerCase());
-    console.log(isValid)
-    if (!isValid && email) {
-      setEmailValidationError("Please enter a valid email");
-    } else {
-      setEmailValidationError("");
-    }
-  }, 300); 
-  return () => clearTimeout(timeoutId); 
-}, [email]);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValid = emailRegex.test(String(email).toLowerCase());
+      console.log(isValid);
+      if (!isValid && email) {
+        setEmailValidationError("Please enter a valid email");
+      } else {
+        setEmailValidationError("");
+      }
+    }, 300);
+    return () => clearTimeout(timeoutId);
+  }, [email]);
 
   useEffect(() => {
     if (emailRef.current) emailRef.current.focus();

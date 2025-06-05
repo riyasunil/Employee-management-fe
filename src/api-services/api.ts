@@ -4,7 +4,7 @@ const baseApi = createApi({
   reducerPath: "jdfhbjdr",
   tagTypes: ["EMPLOYEES", "EMPLOYEE_DETAILS", "DEPARTMENT"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:3001",
     prepareHeaders: (headers) => {
       // Retrieve the token from the state (assuming it's stored in the auth slice)
       const token = localStorage.getItem("token");

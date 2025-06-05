@@ -3,24 +3,20 @@ import Title from "../../components/title/Title";
 import { Button } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { employeeList } from "../../constants/EmployeeList";
 import {
   EmployeeRole,
   EmployeeStatus,
-  type Address,
   type Employee,
   type Role,
   type Status,
 } from "../../store/employee/employee.types";
-import { useAppDispatch, useAppSelector } from "../../store/store";
-import { addEmployee } from "../../store/employee/employeeReducer";
+import { useAppDispatch } from "../../store/store";
 import {
   useCreateEmployeeMutation,
   useGetEmployeeListQuery,
   useUpdateEmployeeMutation,
 } from "../../api-services/employees/employees.api";
 import toast, { Toaster } from "react-hot-toast";
-// import "./manageEmployee.css"
 
 const ManageEmployee = () => {
   const [values, setValues] = useState<Employee>({
@@ -48,8 +44,7 @@ const ManageEmployee = () => {
   const { id } = useParams();
 
   const { data: employees } = useGetEmployeeListQuery({});
-const employee = employees?.find((emp: Employee) => emp.id == Number(id));
-
+  const employee = employees?.find((emp: Employee) => emp.id == Number(id));
 
   // const employees = useAppSelector((state) => state.employee.employees);
   // const employees = useAppSelector((state) => state.jdfhbjdr);
@@ -152,47 +147,44 @@ const employee = employees?.find((emp: Employee) => emp.id == Number(id));
   };
 
   const handleEditEmployee = async () => {
-
-     const cleanAddress = {
-    houseNo: values.address.houseNo,
-    line1: values.address.line1,
-    line2: values.address.line2,
-    pincode: values.address.pincode,
-  };
+    const cleanAddress = {
+      houseNo: values.address.houseNo,
+      line1: values.address.line1,
+      line2: values.address.line2,
+      pincode: values.address.pincode,
+    };
 
     // const roleEnum: EmployeeRole = EmployeeRole[values.role as keyof typeof EmployeeRole] || EmployeeRole.DEVELOPER;
-    
+
     const updateBody = {
       name: values.name,
       email: values.email,
       role: values.role,
       address: cleanAddress,
-      status : values.status,
-      departmentId : values.departmentId,
-      password : values.password,
-      age : values.age,
-      dateOfJoining : values.dateOfJoining,
-      experience : values.experience,
+      status: values.status,
+      departmentId: values.departmentId,
+      password: values.password,
+      age: values.age,
+      dateOfJoining: values.dateOfJoining,
+      experience: values.experience,
     };
 
-    console.log("id", id)
-    console.log("updatebody", updateBody)
-    updateEmployee({ id, updateBody })  
-    .unwrap()
-    .then((res) => {
-      console.log(res);
-      if (res) {
-        alert("employee updated");
-        toast.success('Employee Updated', {
-                  icon : '✅'
-                })
-        navigator("/employee");
-      }
-    })
-    .catch((error) => {  
-      console.error("Update failed:", error);
-      alert("Failed to update employee");
-    });
+    console.log("id", id);
+    console.log("updatebody", updateBody);
+    updateEmployee({ id, updateBody })
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        if (res) {
+          toast.success("Employee Updated", {
+            icon: "✅",
+          });
+          navigator("/employee");
+        }
+      })
+      .catch((error) => {
+        console.error("Update failed:", error);
+      });
   };
 
   const handleCreateEmployee = async () => {
@@ -203,10 +195,9 @@ const employee = employees?.find((emp: Employee) => emp.id == Number(id));
       .then((res) => {
         console.log(res);
         if (res) {
-          alert("employee created");
-          //  toast.success('Employee Created', {
-          //         icon : '✅'
-          //       })
+          toast.success("Employee Created", {
+            icon: "✅",
+          });
           navigator("/employee");
         }
       });
@@ -214,11 +205,9 @@ const employee = employees?.find((emp: Employee) => emp.id == Number(id));
 
   return (
     <div className="employee_container">
-      <Toaster position="top-right"  toastOptions={{
-      success: {
-        className: `h-max-content bg-green-600`,
-      },
-    }}/>
+      <Toaster
+        position="top-right"
+      />
       <Title title={title} />
       <EmployeeDetailsForm
         createEmployee={handleCreateEmployee}

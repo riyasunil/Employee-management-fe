@@ -1,0 +1,8 @@
+.profile__pic{
+    background-color: rgb(199, 199, 199);
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    aspect-ratio: 1/1;
+    margin-right: 2.5rem;
+}

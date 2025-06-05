@@ -65,21 +65,18 @@ const TableRow = ({
       .unwrap()
       .then((res) => {
         console.log(res);
-        alert("Employee deleted");
-        // toast.success('Employee Deleted', {
-        //   icon : '🗑️'
-        // })
+        toast.success('Employee Deleted', {
+          icon : '🗑️'
+        })
         setDeletePopup((prev) => !prev);
       });
   };
   return (
     <>
+       <Toaster position="top-right" 
+    />
       <div className="row_wrapper" onClick={onClick}>
-        <Toaster position="top-right"  toastOptions={{
-      success: {
-        className: `h-max-content bg-green-600`,
-      },
-    }}/>
+     
         <p>{name}</p>
         <p>{empId}</p>
         <p>{joiningDate}</p>

@@ -5,16 +5,6 @@ import { Navigate } from "react-router-dom";
 
 
 const Login = () => {
-  //  const isLoggedIn = () => {
-  //   const token = localStorage.getItem("isLoggedIn");
-  //   return token === "true";
-  // };
-
-  // if (isLoggedIn()) {
-  //   console.log("logged in trying to access login page");
-  //   return <Navigate to="/employee" />
-  // }
-
   return (
     <>
       <div className="login__container">
