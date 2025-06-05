@@ -5,6 +5,7 @@ import Layout from './components/layout/Layout';
 import PublicLayout from './components/publiclayout/PublicLayout';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import EmployeeProfile from './pages/profileEmployee/profileEmployee';
 
 
 const NotFound = lazy(() => import('./pages/notFound/NotFound')) 
@@ -29,6 +30,7 @@ function App() {
           element : <Layout />,
           children: [
             {index: true, element: <ListEmployees />},
+            {path : "profile", element: <EmployeeProfile />},
             {path: "create", element: <ManageEmployee />},
             {path: ":id", element: <EmployeeDetailPage />},
             {path : "edit/:id", element: <ManageEmployee />}

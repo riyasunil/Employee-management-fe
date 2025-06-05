@@ -24,6 +24,8 @@ const Layout = () => {
     "/employee/create/": "Create Employee",
     "/employee": "List Employees",
     "/employee/": "List Employees",
+    "/employee/profile" : "Profile",
+    "employee/profile/" : "Profile"
   };
 
   let currentTitle = routeTitles[location.pathname] || "Default";

@@ -4,6 +4,7 @@ import KVlogo from "../../assets/kv-logo.png";
 import AnimatedInput from "../animatedinput/AnimatedInput";
 import React, { useEffect, useRef, useState, type ChangeEvent } from "react";
 import {
+  data,
   Navigate,
   useNavigate,
   useNavigation,
@@ -11,6 +12,8 @@ import {
 } from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useLoginMutation } from "../../api-services/auth/login.api";
+import { jwtDecode } from 'jwt-decode';
+
 
 const RightPanel = () => {
   const router = useNavigate();
@@ -36,7 +39,13 @@ const RightPanel = () => {
     login({ email: email, password: password })
       .unwrap()
       .then((response) => {
+        if(response.accessToken){
         localStorage.setItem("token", response.accessToken);
+          const decoded = jwtDecode(response.accessToken);
+          // console.log(decoded);
+          // document.cookie = `userId=${decoded.id}; path=/; secure`;
+          localStorage.setItem('userId', decoded.id.toString());
+        }
         router("/employee");
       })
       .catch((error) => {

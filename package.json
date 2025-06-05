@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@types/redux-logger": "^3.0.13",
     "immer": "^10.1.1",
+    "jwt-decode": "^4.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.5.2",

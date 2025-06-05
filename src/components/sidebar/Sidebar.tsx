@@ -11,6 +11,7 @@ const Sidebar = ({title} : {title : string}) => {
   const logout = () => {
     console.log("hi")
     localStorage.setItem("token", "")
+    localStorage.setItem("userId", "")
     navigator("/login")
   }
   return (

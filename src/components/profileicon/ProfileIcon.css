@@ -1,8 +1,17 @@
 .profile__pic{
-    background-color: rgb(199, 199, 199);
+    background-color: rgb(230, 228, 228);
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 38px;
+    width: 38px;
     aspect-ratio: 1/1;
     margin-right: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.profile__pic img{
+    object-fit: contain;
+    width: 20px;
 }

@@ -1,8 +1,15 @@
 import React from 'react'
 import "./ProfileIcon.css"
-const ProfileIcon = ({onclick}) => {
+
+type ProfileType = {
+  onClick ?: (event: React.MouseEvent<HTMLDivElement>) => void,
+}
+
+const ProfileIcon = ({onClick} :  ProfileType) => {
   return (
-      <div className="profile__pic"></div>
+      <div className="profile__pic" onClick={onClick} >
+        <img src="/profile1.svg" alt="" className='profile_placeholder_img'/>
+      </div>
   )
 }
 

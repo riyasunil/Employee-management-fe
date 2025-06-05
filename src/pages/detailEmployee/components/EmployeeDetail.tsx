@@ -17,7 +17,7 @@ type EmployeeType = {
     role: string,
     status: string,
     exp: number
-    address : string,
+    address ?: string,
     departmentName ?: string
 }
 
@@ -66,10 +66,10 @@ const EmployeeDetail = ({
           <p>{empId}</p>
         </div>
         <hr className="divider" />
-        <div className="employee_content_details">
+       {address && <div className="employee_content_details">
           <p>Address</p>
           <p>{address}</p>
-        </div>
+        </div>}
       </div>
   );
 };
