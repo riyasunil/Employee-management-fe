@@ -7,21 +7,6 @@ import { EmployeeRole, EmployeeStatus, type Address, type Employee, type Role, t
 import { useLocation } from "react-router-dom";
 import { useGetDepartmentListQuery } from "../../api-services/departments/department.api";
 
-// const DepartmentOptions = [
-//   {
-//     name: 1,
-//     label: "DEV",
-//   },
-//   {
-//     name : 2,
-//     label: "DESIGN",
-//   },
-//   {
-//     name: 3,
-//     label: "HR",
-//   },
-// ];
-
 const RoleOptions = [
   {
     name: EmployeeRole.UI,
@@ -96,27 +81,15 @@ const EmployeeDetailsForm = ({
   updateAddress,
   createEmployee,
 }: EmployeeFormType) => {
+
   const location = useLocation();
   const {data = []} = useGetDepartmentListQuery({})
-  console.log(data)
+
   const DepartmentOptions = data.map((dep) => ({
     name : dep.id,
     label : dep.name
   }));
-  // const handleCreateEmployee = () => {
-  //    let basePath = location.pathname;
-  // // const emp = useSelector((state : EmployeeState) => state.employees)
-  // // console.log(emp)
-  // if (basePath.startsWith("/employee/edit")) {
-  //   // edit employee api call
-    
-  // }
-  // else if (basePath.startsWith("/employee/create")) {
-  //   //create api call
-  //   createEmployee();
-  // }
-  // };
-  const handleCancelCreateEmployee = () => {};
+ 
   return (
     <div className="form__container">
       <div className="form">
@@ -238,19 +211,8 @@ const EmployeeDetailsForm = ({
           styles={empIDDisabledStyle}
           onChange={(e) => update("employeeId", e.target.value)}
           value={empId}
-          // onChange={(event) => update('emplName', event.target.value)}
         ></Input>
-         {/* <Input
-          name="Employee ID"
-          type="text"
-          id="empid"
-          disabled={isEmpIDDisabled}
-          placeholder={empId || "Employee ID"}
-          styles={empIDDisabledStyle}
-          onChange={(e) => update("employeeId", e.target.value)}
-          value={empId}
-          // onChange={(event) => update('emplName', event.target.value)}
-        ></Input> */}
+
       </div>
 
       <div className="form__buttons">{actionButtons && (actionButtons)}</div>

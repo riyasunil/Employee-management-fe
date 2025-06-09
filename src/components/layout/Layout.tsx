@@ -5,6 +5,10 @@ import Header from "../header/Header";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const Layout = () => {
+
+  const location = useLocation();
+
+
   const isLoggedIn = () => {
     const token = localStorage.getItem("token");
     if (token) return true 
@@ -16,8 +20,6 @@ const Layout = () => {
     return <Navigate to="/login" />;
   }
 
-  const location = useLocation();
-  console.log(location.pathname);
 
   const routeTitles: { [key: string]: string } = {
     "/employee/create": "Create Employee",

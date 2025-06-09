@@ -12,12 +12,10 @@ import {
 } from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useLoginMutation } from "../../api-services/auth/login.api";
-import { jwtDecode } from 'jwt-decode';
-
+import { jwtDecode } from "jwt-decode";
 
 const RightPanel = () => {
   const router = useNavigate();
-  // const [formData, setFormData] = useState({ email: "", password: "" });
   const [login, { isLoading }] = useLoginMutation();
   const [email, setEmail] = useState("");
   // const [username, setUsername] = useState("");
@@ -32,51 +30,32 @@ const RightPanel = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  console.log(isLoading);
-
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     login({ email: email, password: password })
       .unwrap()
       .then((response) => {
-        if(response.accessToken){
-        localStorage.setItem("token", response.accessToken);
+        if (response.accessToken) {
+          localStorage.setItem("token", response.accessToken);
           const decoded = jwtDecode(response.accessToken);
-          // console.log(decoded);
-          // document.cookie = `userId=${decoded.id}; path=/; secure`;
-          localStorage.setItem('userId', decoded.id.toString());
+          localStorage.setItem("userId", decoded.id.toString());
         }
         router("/employee");
       })
       .catch((error) => {
         setError(error.data.message);
       });
-
-    // if (response.data?.accessToken) {
-    //   localStorage.setItem("token", response.data?.accessToken);
-    //   setTimeout(() => {
-    //     router("/employee");
-    //   }, 6000);
-    // }
   };
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  // const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setUsername(event.target.value);
-  // };
-
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
   const toggleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if(passwordRef.current){
-    //   const currType = passwordRef.current.type;
-    //   passwordRef.current.type = currType === "password" ?  "text" : "password"
-    // }
     setShowPassword(e.target.checked);
   };
 
@@ -119,14 +98,6 @@ const RightPanel = () => {
           onChange={handleEmailChange}
           inputRef={emailRef}
         ></AnimatedInput>
-        {/* <AnimatedInput
-          inputType="text"
-          id="username"
-          placeholder="Username"
-          value={username}
-          onChange={handleUsernameChange}
-          inputRef={usernameRef}
-        ></AnimatedInput> */}
         {emailValidationError && (
           <p
             style={{

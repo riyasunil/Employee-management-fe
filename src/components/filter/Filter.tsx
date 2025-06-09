@@ -1,20 +1,9 @@
 import "./Filter.css"
 import FilterSelect from '../filterselect/FilterSelect'
 
-type ObjectType = {
-    name: string,
-    empId: string,
-    dateOfJoining: string,
-    role: string,
-    status: string,
-    exp: string
-}
-
-
 type FilterType = {
   name : string,
   id : string,
-  // options : Array<ObjectType>
   filterFunction ?: Function 
   statusFilter ?: string 
 }

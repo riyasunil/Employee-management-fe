@@ -12,7 +12,7 @@ const Sidebar = ({title} : {title : string}) => {
     console.log("hi")
     localStorage.setItem("token", "")
     localStorage.setItem("userId", "")
-    navigator("/login")
+    navigator("/login",{replace: true})
   }
   return (
     <div className='sidebar__container'>

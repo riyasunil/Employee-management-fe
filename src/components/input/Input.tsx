@@ -13,8 +13,6 @@ type InputType = {
 };
 
 const Input = ({ name, id, type, disabled , placeholder, styles, onChange ,value}: InputType) => {
-  // console.log("value", name, value, "placeholder", placeholder)
-  // console.log(value?.toString())
   return (
     <div className="inputform">
       <label className="input__label">{name}</label>

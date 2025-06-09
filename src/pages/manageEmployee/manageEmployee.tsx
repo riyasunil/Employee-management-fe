@@ -39,17 +39,16 @@ const ManageEmployee = () => {
     password: "",
   });
 
+  const navigator = useNavigate();
+  const location = useLocation();
+
   const [createEmployee] = useCreateEmployeeMutation();
   const [updateEmployee] = useUpdateEmployeeMutation();
+
   const { id } = useParams();
 
   const { data: employees } = useGetEmployeeListQuery({});
   const employee = employees?.find((emp: Employee) => emp.id == Number(id));
-
-  // const employees = useAppSelector((state) => state.employee.employees);
-  // const employees = useAppSelector((state) => state.jdfhbjdr);
-
-  console.log("employess", employees);
 
   function parseRole(role: string): Role {
     return Object.values(EmployeeRole).includes(role as Role)
@@ -63,41 +62,7 @@ const ManageEmployee = () => {
       : EmployeeStatus.INACTIVE;
   }
 
-  useEffect(() => {
-    console.log("here", id, employee);
-    if (id && employee) {
-      setValues({
-        id: employee.id || 0,
-        name: employee.name || "",
-        email: employee.email || "",
-        employeeId: employee.employeeId || "",
-        dateOfJoining: employee.dateOfJoining || "",
-        experience: Number(employee.experience) || 0,
-        departmentId: employee.department.id || "",
-        role: parseRole(employee.role) || EmployeeRole.DEV,
-        status: parseStatus(employee.status) || EmployeeStatus.INACTIVE,
-        address: employee.address || {
-          houseNo: "",
-          line1: "",
-          line2: "",
-          pincode: "",
-        },
-        age: employee.age || 0,
-        password: employee.password || "",
-      });
-    }
-  }, [id, employee]);
-
-  useEffect(() => {
-    console.log("values has been set", values);
-  }, [values]);
-
-  const navigator = useNavigate();
-  const location = useLocation();
-  const dispatch = useAppDispatch();
   let basePath = location.pathname;
-  // const emp = useSelector((state : EmployeeState) => state.employees)
-  // console.log(emp)
   if (basePath.startsWith("/employee/edit")) basePath = "/employee/edit";
   if (basePath.startsWith("/employee/create")) basePath = "/employee/create";
 
@@ -154,8 +119,6 @@ const ManageEmployee = () => {
       pincode: values.address.pincode,
     };
 
-    // const roleEnum: EmployeeRole = EmployeeRole[values.role as keyof typeof EmployeeRole] || EmployeeRole.DEVELOPER;
-
     const updateBody = {
       name: values.name,
       email: values.email,
@@ -203,11 +166,38 @@ const ManageEmployee = () => {
       });
   };
 
+  useEffect(() => {
+    console.log("here", id, employee);
+    if (id && employee) {
+      setValues({
+        id: employee.id || 0,
+        name: employee.name || "",
+        email: employee.email || "",
+        employeeId: employee.employeeId || "",
+        dateOfJoining: employee.dateOfJoining || "",
+        experience: Number(employee.experience) || 0,
+        departmentId: employee.department.id || "",
+        role: parseRole(employee.role) || EmployeeRole.DEV,
+        status: parseStatus(employee.status) || EmployeeStatus.INACTIVE,
+        address: employee.address || {
+          houseNo: "",
+          line1: "",
+          line2: "",
+          pincode: "",
+        },
+        age: employee.age || 0,
+        password: employee.password || "",
+      });
+    }
+  }, [id, employee]);
+
+  useEffect(() => {
+    console.log("values has been set", values);
+  }, [values]);
+
   return (
     <div className="employee_container">
-      <Toaster
-        position="top-right"
-      />
+      <Toaster position="top-right" />
       <Title title={title} />
       <EmployeeDetailsForm
         createEmployee={handleCreateEmployee}

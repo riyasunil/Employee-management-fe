@@ -1,18 +1,10 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { useSearchParams } from "react-router-dom";
 import "../select/Select.css"
+
 type ObjectType = {
     name: string,
     label : string
-}
-
-type EmployeeType = {
-    name: string,
-    empId: string,
-    dateOfJoining: string,
-    role: string,
-    status: string,
-    exp: string
 }
 
 
@@ -20,7 +12,6 @@ type SelectType = {
   name: string;
   id: string;
   options: Array<ObjectType>;
-  // employees ?: Array<EmployeeType>;
   filterFunction ?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   statusFilter ?: string
   styles ?: CSSProperties

@@ -1,5 +1,6 @@
 import React, { act, type ReactNode } from 'react'
 import "./PopUpModal.css"
+
 type PopUpModalType = {
     iconPath : string,
     title : string,
